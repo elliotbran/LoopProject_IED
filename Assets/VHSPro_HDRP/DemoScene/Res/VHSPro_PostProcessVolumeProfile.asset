@@ -238,14 +238,14 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: 1.51
   paletteOn:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 1
   paletteId:
     m_OverrideState: 1
-    m_Value: 3
+    m_Value: 7
   paletteDelta:
     m_OverrideState: 1
-    m_Value: 5
+    m_Value: 3
   paletteTex:
     m_OverrideState: 1
     m_Value: {fileID: 0}
@@ -318,7 +318,7 @@ MonoBehaviour:
     m_Value: 1
   stretchOn:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   jitterHOn:
     m_OverrideState: 1
     m_Value: 1
