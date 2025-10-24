@@ -10,33 +10,22 @@ public class EndlessCorridor : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Entrando al teletransporte...");
+            Debug.Log("que me esta");
 
-            // Calcula la posición del jugador relativa al portal actual
             Vector3 localOffset = transform.InverseTransformPoint(other.transform.position);
-
-            // Calcula la rotación relativa entre ambos portales
             Quaternion relativeRotation = TeleportZoneObject.rotation * Quaternion.Inverse(transform.rotation);
+            CharacterController cc = other.GetComponent<CharacterController>();
 
-            // Si el jugador tiene Rigidbody, lo usamos para moverlo con seguridad
-            Rigidbody rb = other.attachedRigidbody;
-
-            if (rb != null)
+            Debug.Log("Puto holdeando");
+            if (cc != null)
             {
-                // Desactiva momentáneamente la física para evitar empujones raros
-                rb.isKinematic = true;
-                rb.position = TeleportZoneObject.TransformPoint(localOffset);
-                rb.rotation = relativeRotation * rb.rotation;
-                rb.isKinematic = false;
-            }
-            else
-            {
-                // Si no tiene Rigidbody, simplemente movemos el transform
+                cc.enabled = false;
                 other.transform.position = TeleportZoneObject.TransformPoint(localOffset);
-                other.transform.rotation = relativeRotation * other.transform.rotation;
+                other.transform.localRotation = /*relativeRotation * */TeleportZoneObject.transform.localRotation;
+                Debug.Log(other.transform.rotation);
+                cc.enabled = true;
+                Debug.Log("asd");
             }
-
-            Debug.Log("Teletransporte completado.");
         }
     }
 }
