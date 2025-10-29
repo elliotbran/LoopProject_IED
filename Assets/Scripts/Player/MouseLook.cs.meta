@@ -1,5 +1,9 @@
 fileFormatVersion: 2
-guid: dca5ed26f59b97d44b7ec490da1458e1
+<<<<<<<< HEAD:Assets/Scripts/Player/PlayerController.cs.meta
+guid: d21704a8868260348b6d400ef8dc3b4b
+========
+guid: 3c4466dd4411ec6479875c7bfa59e819
+>>>>>>>> main:Assets/Scripts/Player/MouseLook.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
