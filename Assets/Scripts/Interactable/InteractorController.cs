@@ -9,18 +9,12 @@ namespace LoopGame
     public class InteractorController : MonoBehaviour
     {
         public GameObject interactText;
-        public Camera cam;
-
-        private void Start()
-        {
-            cam = GetComponent<Camera>();
-        }
 
         void Update()
         {
             RaycastHit hit;
 
-            if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 5f))
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 5f))
             {
                 if (hit.collider.tag != "Interactable")
                 {
