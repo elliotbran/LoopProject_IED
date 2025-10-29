@@ -1,34 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class PlayerCamera : MonoBehaviour
+namespace LoopGame
 {
-    public float sensX;
-    public float sensY;
-
-    public Transform orientation;
-
-    float _xRotation;
-    float _yRotation;
-    void Start()
+    public class PlayerCamera : MonoBehaviour
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-    }
+        public float sensX;
+        public float sensY;
 
-    void Update()
-    {
-        //get mouse input
-        float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
-        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
+        public Transform orientation;
 
-        _yRotation += mouseX;
-        _xRotation -= mouseY;
-        _xRotation = Mathf.Clamp(_xRotation, -90f, 90f);
+        float _xRotation;
+        float _yRotation;
+        void Start()
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
 
-        //rotate cam and orientation
-        transform.rotation = Quaternion.Euler(_xRotation, _yRotation, 0);
-        orientation.rotation = Quaternion.Euler(0, _yRotation, 0);
+        void Update()
+        {
+            //get mouse input
+            float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
+            float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
+
+            _yRotation += mouseX;
+            _xRotation -= mouseY;
+            _xRotation = Mathf.Clamp(_xRotation, -90f, 90f);
+
+            //rotate cam and orientation
+            transform.rotation = Quaternion.Euler(_xRotation, _yRotation, 0);
+            orientation.rotation = Quaternion.Euler(0, _yRotation, 0);
+        }
     }
 }
+
