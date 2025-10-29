@@ -45,21 +45,10 @@ namespace LoopGame
                 walking = true;
                 stepTimer += Time.deltaTime;
 
-                if (PlayerController.sprinting)
+                if (stepTimer >= stepIntervalWalk)
                 {
-                    if (stepTimer >= stepIntervalSprint)
-                    {
-                        PlayFootstepSound();
-                        stepTimer = 0f;
-                    }
-                }
-                else
-                {
-                    if (stepTimer >= stepIntervalWalk)
-                    {
-                        PlayFootstepSound();
-                        stepTimer = 0f;
-                    }
+                    PlayFootstepSound();
+                    stepTimer = 0f;
                 }
             }
             else
