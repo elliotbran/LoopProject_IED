@@ -10,30 +10,42 @@ namespace LoopGame
     {
         public GameObject interactText;
 
+        // 1. Nueva variable para la distancia de interacción, visible en el Inspector.
+        [SerializeField] private float interactionDistance = 3.0f;
+
         void Update()
         {
             RaycastHit hit;
 
-            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 5f))
+            // 2. Usar la variable interactionDistance en el Raycast.
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, interactionDistance))
             {
-                if (hit.collider.tag != "Interactable")
+                // Verifica si el objeto golpeado tiene la etiqueta "Interactable"
+                if (hit.collider.CompareTag("Interactable"))
                 {
-                    interactText.SetActive(false);
-                }
-                else
-                {
+                    // Objeto interactuable a la vista
                     interactText.SetActive(true);
 
                     if (Input.GetKeyDown(KeyCode.E))
                     {
-                        hit.collider.GetComponent<InteractableObject>().onInteract.Invoke();
-                        interactText.SetActive(false);
+                        // Llama a la función de interacción y oculta el texto
+                        var interactable = hit.collider.GetComponent<InteractableObject>();
+                        if (interactable != null)
+                        {
+                            interactable.onInteract.Invoke();
+                            interactText.SetActive(false);
+                        }
                     }
-
+                }
+                else
+                {
+                    // Objeto golpeado pero no es interactuable
+                    interactText.SetActive(false);
                 }
             }
             else
             {
+                // El Raycast no golpeó nada dentro de la distancia límite
                 interactText.SetActive(false);
             }
         }

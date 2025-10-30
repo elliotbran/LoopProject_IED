@@ -238,7 +238,7 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: 1.51
   paletteOn:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 1
   paletteId:
     m_OverrideState: 1
@@ -255,10 +255,10 @@ MonoBehaviour:
     m_Value: 1
   crtMode:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 2
   bleedAmount:
     m_OverrideState: 1
-    m_Value: 1.08
+    m_Value: 0.85
   noiseResGlobal:
     m_OverrideState: 1
     m_Value: 1
@@ -306,13 +306,13 @@ MonoBehaviour:
     m_Value: 1
   scanLinesOn:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   scanLineWidth:
     m_OverrideState: 1
     m_Value: 10
   linesFloatOn:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   linesFloatSpeed:
     m_OverrideState: 1
     m_Value: 1
@@ -327,7 +327,7 @@ MonoBehaviour:
     m_Value: 0.5
   jitterVOn:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   jitterVAmount:
     m_OverrideState: 1
     m_Value: 1
