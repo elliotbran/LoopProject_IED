@@ -14,18 +14,17 @@ namespace LoopGame
         private bool doorOpen;
         private float cooldown;
         private AudioSource audioSource;
-        public bool islocked;
+        public bool isOpen;
 
         private void Start()
         {
             doorOpen = false;
-            islocked = true;
             audioSource = GetComponent<AudioSource>();
         }
 
         public void UseDoor()
         {
-            if (islocked!)
+            if (isOpen!)
             {
                 if (cooldown > 0)
                 {
