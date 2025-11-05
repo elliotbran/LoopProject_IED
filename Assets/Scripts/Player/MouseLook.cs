@@ -17,6 +17,9 @@ public class SimpleSmoothMouseLook : MonoBehaviour
     // Yaw rotation will affect this object instead of the camera if set.
     public GameObject characterBody;
 
+    [Tooltip("When true, mouse input is ignored (useful for cinematic playback).")]
+    public bool blockMouseInput = false;
+
     void Start()
     {
         // Set target direction to the camera's initial orientation.
@@ -29,10 +32,24 @@ public class SimpleSmoothMouseLook : MonoBehaviour
 
     void Update()
     {
+        // If mouse input is blocked for cinematics: keep cursor locked/hidden and skip processing input.
+        if (blockMouseInput)
+        {
+            ApplyCursorState(blocked: true);
+            return;
+        }
+
         // Ensure the cursor is always locked when set
         if (lockCursor)
         {
             Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        else
+        {
+            // Keep cursor visible/unlocked if lockCursor is false
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
 
         // Allow the script to clamp based on a desired target value.
@@ -72,6 +89,35 @@ public class SimpleSmoothMouseLook : MonoBehaviour
         {
             var yRotation = Quaternion.AngleAxis(_mouseAbsolute.x, transform.InverseTransformDirection(Vector3.up));
             transform.localRotation *= yRotation;
+        }
+    }
+
+    // Public helper to block mouse input (use from your cinematic controller).
+    public void BlockMouseInput()
+    {
+        blockMouseInput = true;
+        ApplyCursorState(blocked: true);
+    }
+
+    // Public helper to unblock mouse input and restore cursor behavior.
+    public void UnblockMouseInput()
+    {
+        blockMouseInput = false;
+        ApplyCursorState(blocked: false);
+    }
+
+    // Apply cursor visibility & lock depending on blocked state or lockCursor setting.
+    void ApplyCursorState(bool blocked)
+    {
+        if (blocked)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        else
+        {
+            Cursor.lockState = lockCursor ? CursorLockMode.Locked : CursorLockMode.None;
+            Cursor.visible = !lockCursor;
         }
     }
 }

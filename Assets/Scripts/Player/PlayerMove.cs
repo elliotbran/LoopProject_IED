@@ -8,6 +8,9 @@ public class PlayerMove : MonoBehaviour
     private Vector3 _moveDirection;
     private CharacterController _controller;
 
+    [Tooltip("When true, player movement input is ignored (useful for cinematics).")]
+    public bool blockMovement = false;
+
     private void Awake()
     {
         _controller = GetComponent<CharacterController>();
@@ -25,11 +28,18 @@ public class PlayerMove : MonoBehaviour
 
     private void DefaultMovement()
     {
+        // If movement is blocked (cinematic), zero movement and skip input
+        if (blockMovement)
+        {
+            _moveDirection = Vector3.zero;
+            return;
+        }
+
         if (_controller.isGrounded)
         {
             Vector2 input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 
-            if(input.x != 0 && input.y != 0)
+            if (input.x != 0 && input.y != 0)
             {
                 input *= 0.777f;
             }
@@ -45,16 +55,27 @@ public class PlayerMove : MonoBehaviour
                 Jump();
             }
         }
-
         else
         {
             _moveDirection.y -= _settings.gravity * Time.deltaTime;
         }
     }
+
     private void Jump()
     {
         _moveDirection.y = _settings.jumpForce;
     }
 
+    // Public API for cinematics
+    public void BlockMovement()
+    {
+        blockMovement = true;
+        _moveDirection = Vector3.zero; // ensure immediate stop
+    }
+
+    public void UnblockMovement()
+    {
+        blockMovement = false;
+    }
 }
 

@@ -7,6 +7,7 @@ TagManager:
   - Wood
   - Interactable
   - Tiles
+  - Carpet
   layers:
   - Default
   - TransparentFX
