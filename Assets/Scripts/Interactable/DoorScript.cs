@@ -1,25 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
+using UnityEngine.Timeline;
 
 namespace LoopGame
 {
     public class DoorScript : MonoBehaviour
     {
-        [SerializeField] Animation anim;
-        [SerializeField] AudioClip openSound;
-        [SerializeField] string doorOpenAnimation;
-        [SerializeField] string doorCloseAnimation;
+        
         private bool doorOpen;
         private float cooldown;
-        private AudioSource audioSource;
         public bool isOpen;
-
         private void Start()
         {
             doorOpen = false;
-            audioSource = GetComponent<AudioSource>();
         }
 
         public void UseDoor()
@@ -37,12 +33,11 @@ namespace LoopGame
 
                 if (doorOpen)
                 {
-                    anim.Play(doorOpenAnimation);
-                    audioSource.PlayOneShot(openSound);
+                    
                 }
                 else
                 {
-                    anim.Play(doorCloseAnimation);
+
                 }
             }
             else
