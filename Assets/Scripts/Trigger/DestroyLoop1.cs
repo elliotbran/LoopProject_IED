@@ -22,6 +22,7 @@ public class DestroyLoop1 : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Destroy(Loop1Object);
+            gameObject.SetActive(false);
         }
     }
 }
