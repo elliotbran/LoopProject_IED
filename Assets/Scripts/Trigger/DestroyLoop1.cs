@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DestroyLoop1 : MonoBehaviour
+public class DestroyLoop1ActivateLoop3: MonoBehaviour
 {
     public GameObject Loop1Object;
+    public GameObject Loop3Object;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +24,7 @@ public class DestroyLoop1 : MonoBehaviour
         {
             Destroy(Loop1Object);
             gameObject.SetActive(false);
+            Loop3Object.SetActive(true);
         }
     }
 }
