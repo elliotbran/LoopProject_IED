@@ -5,7 +5,6 @@ using UnityEngine;
 public class DeactivateIntro : MonoBehaviour
 {
     public GameObject introObject;
-    public GameObject bathroomObject;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +22,6 @@ public class DeactivateIntro : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Destroy(introObject);
-            Destroy(bathroomObject);
         }
     }    
 }

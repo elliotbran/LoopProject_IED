@@ -8,13 +8,11 @@ namespace LoopGame
     public class GetKey : MonoBehaviour
     {
         public GameObject key;        
-        public DoorScript doorScript;
         public GameObject loop3Trigger;
 
         // Start is called before the first frame update
         void Start()
         {
-            doorScript.isOpen = false;
         }
         // Update is called once per frame
         void Update()
@@ -24,7 +22,6 @@ namespace LoopGame
         {
             key.SetActive(false);
             loop3Trigger.SetActive(true);
-            doorScript.isOpen = true;
         }
     }
 }

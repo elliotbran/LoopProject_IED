@@ -10,20 +10,17 @@ public class LinternaScript : MonoBehaviour
     public GameObject LuzLinterna;
     public GameObject LuzLinternaBase;
     public GameObject textoTutorial;
-    DoorScript DoorScript;
 
     public GameObject AudioFix;
     AudioSource audiosource;
 
     private void Start()
     {
-        DoorScript = FindAnyObjectByType<DoorScript>();
         audiosource = AudioFix.GetComponent<AudioSource>();
     }
     public void Pickup()
     {
         audiosource.enabled = true;
-        DoorScript.islocked = false;
         LuzLinternaBase.SetActive(true);  
         StartCoroutine(TextoTutorial());
     }

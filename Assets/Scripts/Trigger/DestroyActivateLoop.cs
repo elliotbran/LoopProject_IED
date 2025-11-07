@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DestroyLoop1ActivateLoop3: MonoBehaviour
+public class DestroyActivateLoop: MonoBehaviour
 {
-    public GameObject Loop1Object;
-    public GameObject Loop3Object;
+    public GameObject destroyLoop;
+    public GameObject activateLoop;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,9 +22,9 @@ public class DestroyLoop1ActivateLoop3: MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Destroy(Loop1Object);
+            Destroy(destroyLoop);
             gameObject.SetActive(false);
-            Loop3Object.SetActive(true);
+            activateLoop.SetActive(true);
         }
     }
 }
