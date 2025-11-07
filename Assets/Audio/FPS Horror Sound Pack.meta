@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Audio/FPS Horror Sound Pack.meta
 guid: 13fd26c2aefc79a49aeaedee4dc4c75c
+========
+guid: daae3a5b00c6e6f4180104b035d512fb
+>>>>>>>> main:Assets/Audio/Ambience.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
