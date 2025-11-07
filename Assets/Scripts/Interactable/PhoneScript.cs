@@ -16,11 +16,17 @@ namespace LoopGame
         [SerializeField] AudioClip endCallSound;
         [SerializeField] AudioSource audioCall;
 
+        // Referencia al BoxCollider que queremos desactivar
+        private BoxCollider phoneCollider;
+
         // Variable para almacenar la Coroutine y poder detenerla
         private Coroutine callCoroutine;
 
         void Start()
         {
+            // OBTENER EL BOXCOLLIDER: Asume que el BoxCollider está en el mismo GameObject.
+            phoneCollider = GetComponent<BoxCollider>();
+
             // 1. Reproducir ringSound loopeado al inicio.
             if (ringSound != null && audioCall != null)
             {
@@ -48,7 +54,7 @@ namespace LoopGame
                     callCoroutine = StartCoroutine(StartCallSequence());
                 }
             }
-            else // COLGAR (Interrumpe la llamada)
+            else // COLGAR (Interrumpe la llamada y desactiva el collider)
             {
                 // Detener cualquier Coroutine de llamada activa para interrumpir la secuencia
                 if (callCoroutine != null)
@@ -61,10 +67,15 @@ namespace LoopGame
                 audioCall.Stop();
                 audioCall.clip = null;
 
-                // Reproducir offSound (sonido de colgar/finalizar la interacción)
+                // INICIAR COROUTINE para reproducir offSound y luego desactivar el Collider.
                 if (offSound != null)
                 {
-                    audioCall.PlayOneShot(offSound);
+                    StartCoroutine(PlayOffSoundAndDisableCollider());
+                }
+                else if (phoneCollider != null)
+                {
+                    // Si no hay offSound, desactivar inmediatamente (como fallback)
+                    phoneCollider.enabled = false;
                 }
             }
         }
@@ -93,9 +104,22 @@ namespace LoopGame
                 {
                     audioCall.PlayOneShot(endCallSound);
                 }
+            }
+        }
 
-                // Opcional: Podrías querer poner 'on = false' aquí si la llamada termina por sí misma.
-                // on = false;
+        // NUEVA COROUTINE: Reproduce offSound y luego desactiva el BoxCollider.
+        IEnumerator PlayOffSoundAndDisableCollider()
+        {
+            // Reproducir offSound
+            audioCall.PlayOneShot(offSound);
+
+            // Esperar la duración de offSound
+            yield return new WaitForSeconds(offSound.length);
+
+            // Desactivar el BoxCollider para evitar más interacciones
+            if (phoneCollider != null)
+            {
+                phoneCollider.enabled = false;
             }
         }
     }
