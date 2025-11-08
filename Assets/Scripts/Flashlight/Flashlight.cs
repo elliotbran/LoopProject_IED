@@ -13,7 +13,7 @@ public class Flashlight : MonoBehaviour
 
     public Light flashLight; // the flashlight
 
-    private bool flashlightisOn = false; // is the flashlight on or off
+    private bool flashlightisOn = true; // is the flashlight on or off
 
     // audio
 
