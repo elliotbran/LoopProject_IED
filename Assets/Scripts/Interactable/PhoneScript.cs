@@ -1,48 +1,59 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UIElements;
 
 namespace LoopGame
 {
+    // CLASE PRINCIPAL: PhoneScript (Adjunto al objeto interactivo del teléfono)
     public class PhoneScript : MonoBehaviour
     {
         bool on;
-        [SerializeField] AudioClip onSound;
-        [SerializeField] AudioClip offSound;
-        [SerializeField] AudioClip ringSound;
-        [SerializeField] AudioClip callSound;
-        [SerializeField] AudioClip endCallSound;
-        [SerializeField] AudioSource audioCall;
+        private bool isRinging = false;
 
-        // Referencia al BoxCollider que queremos desactivar
-        private BoxCollider phoneCollider;
+        [Header("Referencias")]
+        public GameObject phoneInteractionObject;
+        public GameObject doll;
 
-        // Variable para almacenar la Coroutine y poder detenerla
+        [Header("Sonidos")]
+        public AudioClip onSound;
+        public AudioClip offSound;
+        public AudioClip ringSound;
+        public AudioClip callSound;
+        public AudioClip endCallSound;
+        public AudioSource audioCall;
+
+        private Collider phoneCollider;
         private Coroutine callCoroutine;
 
-        void Start()
+        // Llamado por el PhoneActivator externo al detectar al jugador.
+        public void StartRinging()
         {
-            // OBTENER EL BOXCOLLIDER: Asume que el BoxCollider está en el mismo GameObject.
-            phoneCollider = GetComponent<BoxCollider>();
+            if (isRinging) return;
 
-            // 1. Reproducir ringSound loopeado al inicio.
+            isRinging = true;
+            Debug.Log("Activado: ¡El teléfono comienza a sonar!");
+
             if (ringSound != null && audioCall != null)
             {
                 audioCall.clip = ringSound;
-                audioCall.loop = true; // Solo ringSound está en bucle
+                audioCall.loop = true;
                 audioCall.Play();
             }
         }
 
+        void Start()
+        {
+            doll.SetActive(false);
+            phoneCollider = GetComponent<Collider>();
+        }
+
         public void UsePhone()
         {
+            if (!isRinging) return;
+
             on = !on;
 
-            if (on) // DESCOLGAR (Inicia la llamada)
+            if (on) // DESCOLGAR
             {
-                // Parar ringSound que estaba en loop
                 if (audioCall.isPlaying && audioCall.clip == ringSound)
                 {
                     audioCall.Stop();
@@ -50,56 +61,45 @@ namespace LoopGame
 
                 if (onSound != null)
                 {
-                    // Iniciar la secuencia de la llamada en una Coroutine
                     callCoroutine = StartCoroutine(StartCallSequence());
                 }
             }
-            else // COLGAR (Interrumpe la llamada y desactiva el collider)
+            else // COLGAR
             {
-                // Detener cualquier Coroutine de llamada activa para interrumpir la secuencia
                 if (callCoroutine != null)
                 {
                     StopCoroutine(callCoroutine);
                     callCoroutine = null;
                 }
 
-                // Detener el audio actual (onSound o callSound)
                 audioCall.Stop();
                 audioCall.clip = null;
+                isRinging = false;
 
-                // INICIAR COROUTINE para reproducir offSound y luego desactivar el Collider.
                 if (offSound != null)
                 {
-                    StartCoroutine(PlayOffSoundAndDisableCollider());
+                    StartCoroutine(PlayOffSoundAndDisableInteraction());
                 }
-                else if (phoneCollider != null)
+                else if (phoneInteractionObject != null)
                 {
-                    // Si no hay offSound, desactivar inmediatamente (como fallback)
-                    phoneCollider.enabled = false;
+                    phoneInteractionObject.SetActive(false);
                 }
             }
         }
 
-        // Coroutine para manejar la secuencia: onSound -> callSound (una vez) -> endCallSound (al terminar callSound)
         IEnumerator StartCallSequence()
         {
-            // 1. Reproducir onSound
             audioCall.PlayOneShot(onSound);
-
-            // Esperar la duración de onSound
             yield return new WaitForSeconds(onSound.length);
 
-            // 2. Reproducir callSound una sola vez (si el teléfono sigue "on")
             if (on && callSound != null)
             {
                 audioCall.clip = callSound;
-                audioCall.loop = false; // callSound NO está en bucle
+                audioCall.loop = false;
                 audioCall.Play();
 
-                // Esperar a que callSound termine de sonar
                 yield return new WaitForSeconds(callSound.length);
 
-                // 3. Cuando callSound ACABA, reproducir endCallSound (si el teléfono sigue "on")
                 if (on && endCallSound != null)
                 {
                     audioCall.PlayOneShot(endCallSound);
@@ -107,19 +107,15 @@ namespace LoopGame
             }
         }
 
-        // NUEVA COROUTINE: Reproduce offSound y luego desactiva el BoxCollider.
-        IEnumerator PlayOffSoundAndDisableCollider()
+        IEnumerator PlayOffSoundAndDisableInteraction()
         {
-            // Reproducir offSound
             audioCall.PlayOneShot(offSound);
-
-            // Esperar la duración de offSound
             yield return new WaitForSeconds(offSound.length);
 
-            // Desactivar el BoxCollider para evitar más interacciones
-            if (phoneCollider != null)
+            if (phoneInteractionObject != null)
             {
-                phoneCollider.enabled = false;
+                phoneInteractionObject.SetActive(false);
+                doll.SetActive(true);
             }
         }
     }
