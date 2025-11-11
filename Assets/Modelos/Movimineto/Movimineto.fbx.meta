@@ -3,7 +3,27 @@ guid: 2de9f31dd722e6f4099e45c3e8706410
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Black Denim Fabric
+    second: {fileID: 2100000, guid: 5a4edc5472a5257458b6d85c8de37eb0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Fabric
+    second: {fileID: 2100000, guid: a802bf9487e457d4fac6097f837ff98d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Fabric.001
+    second: {fileID: 2100000, guid: 8c166dfa9e1a3334e86bc3885d80840b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Red Denim Fabric
+    second: {fileID: 2100000, guid: 5295a5269c9de8647b036bde5df03368, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
