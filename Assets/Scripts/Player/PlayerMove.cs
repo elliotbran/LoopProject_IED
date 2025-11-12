@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
-    [SerializeField] private MoveSettings _settings = null;
+    public MoveSettings _settings = null;
     private Vector3 _moveDirection;
     private CharacterController _controller;
 
