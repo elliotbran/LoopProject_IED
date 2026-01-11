@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   components:
   - {fileID: 1175449354223463808}
-  - {fileID: 3804358898402811127}
 --- !u!114 &1175449354223463808
 MonoBehaviour:
   m_ObjectHideFlags: 3
